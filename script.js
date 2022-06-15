@@ -32,12 +32,52 @@ const account4 = {
 const accounts = [account1, account2, account3, account4];
 
 // DOM Elements
+const labelWelcome = document.querySelector('.welcome__note');
 const labelBalance = document.querySelector('.balance__total');
 const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 
+const containerApp = document.querySelector('.app');
 const containeMovements = document.querySelector('.movements');
+
+const btnLogin = document.querySelector('.log-in__button');
+const inputLoginUsername = document.querySelector('.log-in__username');
+const inputLoginPin = document.querySelector('.log-in__password');
+
+// State variables
+let currentAccount;
+
+// Event handler
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount.pin === Number(inputLoginPin.value)) {
+    // 1. Display the UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+    inputLoginUsername.focus();
+
+    // 2. Display the movements
+    displayMovements(currentAccount.movements);
+
+    // 3. Display balance
+    calcDisplayBalance(currentAccount.movements);
+
+    // 4. Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
 
 const displayMovements = function (movements) {
   // 1. Clear the movements container
@@ -62,8 +102,6 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-
 const calcDisplayBalance = function (movements) {
   // 1. Calculate the total balance of the movements
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
@@ -72,11 +110,9 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `$${balance}`;
 };
 
-calcDisplayBalance(account1.movements);
-
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (account) {
   // 1. Calculate the total deposits
-  const income = movements
+  const income = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
@@ -84,7 +120,7 @@ const calcDisplaySummary = function (movements) {
   labelSumIn.textContent = `$${income}`;
 
   // 3. Calculate the total withdrawals
-  const out = movements
+  const out = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
@@ -92,17 +128,15 @@ const calcDisplaySummary = function (movements) {
   labelSumOut.textContent = `$${Math.abs(out)}`;
 
   // 5. Calculate the interest - The bank offers an interest of 1.2% on every deposit
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(mov => (mov * 1.2) / 100)
+    .map(mov => (mov * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
 
   // 6. Display the interest to the UI
   labelSumInterest.textContent = `$${interest}`;
 };
-
-calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
