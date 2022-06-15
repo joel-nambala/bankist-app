@@ -1,0 +1,264 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f3f3f3;
+  color: #444;
+  font-family: 'Poppins', sans-serif;
+}
+
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 6rem;
+}
+
+.welcome__note {
+  font-size: 2.4rem;
+  font-weight: 300;
+}
+
+.welcome__img {
+  width: 6rem;
+}
+
+.log-in__input {
+  width: 11rem;
+  border-radius: 10rem;
+  margin-right: 1rem;
+  border: none;
+  background-color: rgba(255, 255, 245, 0.8);
+  text-align: center;
+  padding: 0.8rem 1.4rem;
+  font-size: 1.4rem;
+}
+
+.log-in__input::placeholder {
+  color: #999;
+}
+
+.log-in__password {
+  text-transform: uppercase;
+}
+
+.log-in__input:focus {
+  outline: none;
+  border: 1px solid #e9e8e8;
+}
+
+.log-in__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.app {
+  max-width: 100rem;
+  margin: 4rem auto;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: auto repeat(3, 14rem) auto;
+  gap: 2rem;
+}
+
+.balance {
+  grid-column: 1 / span 2;
+
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.balance__label {
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.balance__date {
+  font-size: 1.6rem;
+  color: #666;
+}
+
+.balance__total {
+  font-size: 4rem;
+  font-weight: 400;
+}
+
+.movements {
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: scroll;
+
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 3;
+}
+
+.movements__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  padding: 2rem 4rem;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.movements__type {
+  margin-right: 1rem;
+  border-radius: 14px;
+  padding: 0.1em 1rem;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.movements__date {
+  margin-right: auto;
+  color: #666;
+}
+
+.movements__type--deposit {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+
+.movements__type--withdrawal {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.movements__value {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.summary {
+  grid-column: 1 / span 1;
+  grid-row: 5 / 6;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 2rem;
+}
+
+.summary__label {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #666;
+  margin-right: 1rem;
+}
+
+.summary__value {
+  margin-right: auto;
+  font-size: 2.2rem;
+  font-weight: 500;
+}
+
+.summary__button {
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.summary__button:hover {
+  color: #666;
+}
+
+.summary__value--in {
+  color: #66c873;
+}
+
+.summary__value--out {
+  color: #f5465d;
+}
+
+.summary__value--interest {
+  color: #66c873;
+}
+
+.operation {
+  padding: 3rem 4rem;
+  border-radius: 6px;
+}
+
+.operation h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 2.5fr 2.5fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.4rem 1rem;
+}
+
+.form label {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.form__btn {
+  width: 6rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.form__input {
+  width: 100%;
+  padding: 0.2rem 1.2rem;
+  font-family: inherit;
+  font-size: 1.6rem;
+  text-align: center;
+  background-color: rgba(255, 255, 245, 0.6);
+  color: #333;
+  border: none;
+  border-radius: 6px;
+}
+
+.form__input:focus {
+  outline: none;
+}
+
+.form.form--loan {
+  grid-template-columns: 2.5fr 1fr 2.5fr;
+}
+
+.form--loan label {
+  grid-row: 2;
+}
+
+.operation--transfer {
+  background-image: linear-gradient(to top left, #ffb003, #f3cb03);
+}
+
+.operation--loan {
+  background-image: linear-gradient(to top left, #39b385, #9be15d);
+}
+
+.operation--close {
+  background-image: linear-gradient(to top left, #e52a5a, #ff585f);
+}
+
+.log-out__timer {
+  font-size: 1.4rem;
+  align-self: end;
+  justify-self: end;
+}
+
+.timer {
+  font-weight: 600;
+}
