@@ -33,6 +33,9 @@ const accounts = [account1, account2, account3, account4];
 
 // DOM Elements
 const labelBalance = document.querySelector('.balance__total');
+const labelSumIn = document.querySelector('.summary__value--in');
+const labelSumOut = document.querySelector('.summary__value--out');
+const labelSumInterest = document.querySelector('.summary__value--interest');
 
 const containeMovements = document.querySelector('.movements');
 
@@ -50,7 +53,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">$${Math.abs(mov)}</div>
       </div>
     `;
 
@@ -62,12 +65,44 @@ const displayMovements = function (movements) {
 displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
+  // 1. Calculate the total balance of the movements
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
 
-  labelBalance.textContent = `${balance} USD`;
+  // 2. Display the balance to the UI
+  labelBalance.textContent = `$${balance}`;
 };
 
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  // 1. Calculate the total deposits
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  // 2. Display the total deposits to the UI
+  labelSumIn.textContent = `$${income}`;
+
+  // 3. Calculate the total withdrawals
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  // 4. Display the total withdrawals to the UI
+  labelSumOut.textContent = `$${Math.abs(out)}`;
+
+  // 5. Calculate the interest - The bank offers an interest of 1.2% on every deposit
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(mov => (mov * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+
+  // 6. Display the interest to the UI
+  labelSumInterest.textContent = `$${interest}`;
+};
+
+calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -80,4 +115,3 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
-console.log(accounts);
